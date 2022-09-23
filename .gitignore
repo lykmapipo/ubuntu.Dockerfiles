@@ -626,5 +626,7 @@ spark-warehouse/
 # For SBT
 .jvmopts
 
+# My Scratches
+REF.md
 
 # End of https://www.toptal.com/developers/gitignore/api/c,c++,git,java,scala,python,r,julia,go,node,jupyternotebooks,spark
