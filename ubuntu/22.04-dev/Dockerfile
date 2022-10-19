@@ -12,6 +12,7 @@ ENV LANG=C.UTF-8 \
   LC_ALL=C.UTF-8
 
 # update and install runtime dependencies
+# hadolint ignore=DL3008
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
@@ -21,10 +22,16 @@ RUN set -eux; \
         make \
         wget \
         curl \
+        vim \
+        git \
+        gnupg \
     ; \
     apt-get -y autoremove; \
     apt-get -y autoclean; \
     rm -rf /var/lib/apt/lists/*
+
+# expose common ports
+EXPOSE 22
 
 # drop into bash on exec
 CMD ["bash"]

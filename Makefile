@@ -16,13 +16,21 @@ build/dev/ubuntu: ## Build ubuntu dev image for experimentation
 
 
 run/dev/ubuntu: ## Run ubuntu dev image for experimentation
-	docker run -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
+	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
+
+
+lint: lint/dev/ubuntu
+
+
+lint/dev/ubuntu: ## Lint ubuntu dev dockerfile
+	docker run --rm -i hadolint/hadolint < ./ubuntu/${UBUNTU_OS_VERSION}-dev/Dockerfile
 
 
 .PHONY: docker/pull/os
-docker/pull/os: ## Pull base operating system docker images
+docker/pull/os: ## Pull base docker images i.e os, linter etc
 	@make docker/pull/ubuntu
 	@make docker/pull/debian
+	@make docker/pull/linter
 
 
 .PHONY: docker/pull/ubuntu
@@ -39,6 +47,11 @@ docker/pull/debian: ## Pull debian slim docker images
 	docker pull debian:11-slim
 	docker pull debian:10-slim
 	docker pull debian:latest
+
+
+.PHONY: docker/pull/linter
+docker/pull/linter: ## Pull linter docker images i.e hadolint etc
+	docker pull hadolint/hadolint:latest
 
 
 .PHONY: clean
