@@ -19,7 +19,7 @@ run/dev/ubuntu: ## Run ubuntu dev image for experimentation
 	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
 
 
-lint: lint/dev/ubuntu ## Lint dockerfiles
+lint: lint/dev/ubuntu
 
 
 lint/dev/ubuntu: ## Lint ubuntu dev dockerfile

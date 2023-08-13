@@ -10,6 +10,11 @@ Experimental Docker files and images.
 - [Docker Compose v1.29+](https://docs.docker.com/compose/install/)
 
 
+## Install
+
+> TODO
+
+
 ## Usage
 
 > TODO
@@ -18,6 +23,34 @@ Experimental Docker files and images.
 ## Debug & Verify
 
 > TODO
+
+
+## Develop
+- Clone this repository
+```sh
+git clone https://github.com/lykmapipo/dockerfiles
+```
+
+- Install base docker images
+```sh
+make docker/pull/os
+```
+
+## Testing
+- Clone this repository
+```sh
+git clone https://github.com/lykmapipo/dockerfiles
+```
+
+- Install base docker images
+```sh
+make docker/pull/os
+```
+
+- Run test
+```sh
+make lint
+```
 
 
 ## Contribute
