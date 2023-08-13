@@ -1,6 +1,7 @@
 # syntanx=docker/dockerfile:1
 
 # choose base images
+# choose base images
 FROM ubuntu:22.04
 
 # set image labels
@@ -25,6 +26,7 @@ RUN set -eux; \
         vim \
         git \
         gnupg \
+        build-essential \
     ; \
     apt-get -y autoremove; \
     apt-get -y autoclean; \

@@ -19,7 +19,7 @@ run/dev/ubuntu: ## Run ubuntu dev image for experimentation
 	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
 
 
-lint: lint/dev/ubuntu
+lint: lint/dev/ubuntu ## Lint dockerfiles
 
 
 lint/dev/ubuntu: ## Lint ubuntu dev dockerfile
@@ -49,9 +49,22 @@ docker/pull/debian: ## Pull debian slim docker images
 	docker pull debian:latest
 
 
+.PHONY: docker/pull/java-jdk
+docker/pull/java-jdk: ## Pull java jdk docker images
+	docker pull eclipse-temurin:19-jdk-jammy
+	docker pull eclipse-temurin:18-jdk-jammy
+
+
+.PHONY: docker/pull/java-jre
+docker/pull/java-jre: ## Pull java jre docker images
+	docker pull eclipse-temurin:19-jre-jammy
+	docker pull eclipse-temurin:18-jre-jammy
+
+
 .PHONY: docker/pull/linter
 docker/pull/linter: ## Pull linter docker images i.e hadolint etc
 	docker pull hadolint/hadolint:latest
+	# docker pull gcr.io/gcp-runtimes/container-structure-test:latest
 
 
 .PHONY: clean
