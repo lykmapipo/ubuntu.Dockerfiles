@@ -6,8 +6,8 @@ Experimental Docker files and images.
 ## Requirements
 
 - [Ubuntu v18+](https://ubuntu.com/)
-- [Docker v20.10+](https://docs.docker.com/get-docker/)
-- [Docker Compose v1.29+](https://docs.docker.com/compose/install/)
+- [Docker v24.0.2+](https://docs.docker.com/get-docker/)
+- [Docker Compose v1.29.2+](https://docs.docker.com/compose/install/)
 
 
 ## Install

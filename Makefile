@@ -33,35 +33,24 @@ lint/dev/ubuntu:
 docker/pull/os:
 	@make docker/pull/ubuntu
 	@make docker/pull/debian
+	@make docker/pull/java
 	@make docker/pull/linter
 
 
 .PHONY: docker/pull/ubuntu  ## Pull ubuntu docker images
 docker/pull/ubuntu:
-	docker pull ubuntu:22.10
 	docker pull ubuntu:22.04
-	docker pull ubuntu:20.04
-	docker pull ubuntu:18.04
-	docker pull ubuntu:latest
 
 
 .PHONY: docker/pull/debian  ## Pull debian slim docker images
 docker/pull/debian:
-	docker pull debian:11-slim
-	docker pull debian:10-slim
-	docker pull debian:latest
+	docker pull debian:12-slim
 
 
-.PHONY: docker/pull/java-jdk  ## Pull java jdk docker images
-docker/pull/java-jdk:
-	docker pull eclipse-temurin:19-jdk-jammy
-	docker pull eclipse-temurin:18-jdk-jammy
-
-
-.PHONY: docker/pull/java-jre  ## Pull java jre docker images
-docker/pull/java-jre:
-	docker pull eclipse-temurin:19-jre-jammy
-	docker pull eclipse-temurin:18-jre-jammy
+.PHONY: docker/pull/java  ## Pull java jdk and jre docker images
+docker/pull/java:
+	docker pull eclipse-temurin:17-jdk-jammy
+	docker pull eclipse-temurin:17-jre-jammy
 
 
 .PHONY: docker/pull/linter  ## Pull linter docker images i.e hadolint etc
@@ -70,13 +59,18 @@ docker/pull/linter:
 	# docker pull gcr.io/gcp-runtimes/container-structure-test:latest
 
 
-.PHONY: clean  ## Clean ubuntu images
-clean: clean/dev/ubuntu
+.PHONY: clean  ## Clean docker images
+clean: clean/dev/ubuntu clean/dangling
 
 
 .PHONY: clean/dev/ubuntu  ## Clean ubuntu dev images
 clean/dev/ubuntu:
-	docker image rm -f $(shell docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -a -q)
+	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -a -q | xargs -L1 -r -t docker rmi
+
+
+.PHONY: clean/dangling  ## Clean dangling images
+clean/dangling:
+	docker image ls --filter "dangling=true" --quiet | xargs -L1 -r -t docker rmi
 
 
 .PHONY: help  ## Display this message
