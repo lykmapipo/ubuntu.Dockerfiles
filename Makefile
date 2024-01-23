@@ -33,8 +33,10 @@ lint/dev/ubuntu:
 docker/pull/os:
 	@make docker/pull/ubuntu
 	@make docker/pull/debian
+	@make docker/pull/alpine
 	@make docker/pull/java
 	@make docker/pull/linter
+	@make clean/dangling
 
 
 .PHONY: docker/pull/ubuntu  ## Pull ubuntu docker images
@@ -45,6 +47,11 @@ docker/pull/ubuntu:
 .PHONY: docker/pull/debian  ## Pull debian slim docker images
 docker/pull/debian:
 	docker pull debian:12-slim
+
+
+.PHONY: docker/pull/alpine  ## Pull alpine docker images
+docker/pull/alpine:
+	docker pull alpine:3.19
 
 
 .PHONY: docker/pull/java  ## Pull java jdk and jre docker images

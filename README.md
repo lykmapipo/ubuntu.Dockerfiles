@@ -28,7 +28,7 @@ Experimental Docker files and images.
 ## Develop
 - Clone this repository
 ```sh
-git clone https://github.com/lykmapipo/dockerfiles
+git clone https://github.com/lykmapipo/Dockerfiles
 ```
 
 - Install base docker images
@@ -39,7 +39,7 @@ make docker/pull/os
 ## Testing
 - Clone this repository
 ```sh
-git clone https://github.com/lykmapipo/dockerfiles
+git clone https://github.com/lykmapipo/Dockerfiles
 ```
 
 - Install base docker images
