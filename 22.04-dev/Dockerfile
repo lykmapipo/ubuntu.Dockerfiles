@@ -1,22 +1,22 @@
 # syntanx=docker/dockerfile:1
 
-# choose base images
+# Use Ubuntu 22.04 as the base image
 FROM ubuntu:22.04
 
-# set image labels
+# Set image labels
 LABEL maintainer="Lally Elias <lallyelias87@gmail.com>" \
   vendor="lykmapipo"
 
-# set environment variables
+# Set environment variables
 ENV LANG=C.UTF-8 \
   LC_ALL=C.UTF-8 \
   DEBIAN_FRONTEND=noninteractive
 
-# update and install runtime dependencies
+# Update package lists and install runtime dependencies
 # hadolint ignore=DL3008
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y --fix-missing --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
@@ -27,7 +27,6 @@ RUN set -eux; \
         netbase \
         openssh-client \
         procps \
-        # tzdata \
         vim \
         wget \
     ; \
@@ -35,8 +34,8 @@ RUN set -eux; \
     apt-get -y autoclean; \
     rm -rf /var/lib/apt/lists/*
 
-# expose common ports
+# Expose common ports
 EXPOSE 22
 
-# drop into bash on exec
+# Drop into bash on exec
 CMD ["bash"]

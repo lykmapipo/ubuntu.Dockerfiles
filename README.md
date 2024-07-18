@@ -1,6 +1,8 @@
-# Dockerfiles
+# Ubuntu Dockerfiles
 
-Experimental Docker files and images.
+Dockerfiles for building Ubuntu-based Docker images for development and experimentation.
+
+> :sparkles: :tada: These Dockerfiles provide a starting point for creating custom development environments using various versions of Ubuntu, pre-configured with essential tools, packages and libraries to streamline the development and experimentation process. :rocket:
 
 
 ## Requirements
@@ -10,57 +12,37 @@ Experimental Docker files and images.
 - [Docker Compose v1.29.2+](https://docs.docker.com/compose/install/)
 
 
-## Install
-
-> TODO
-
-
 ## Usage
 
-> TODO
-
-
-## Debug & Verify
-
-> TODO
-
-
-## Develop
 - Clone this repository
 ```sh
-git clone https://github.com/lykmapipo/Dockerfiles
+git clone https://github.com/lykmapipo/ubuntu.Dockerfiles.git
 ```
 
 - Install base docker images
 ```sh
-make docker/pull/os
+make pull
 ```
 
-## Testing
-- Clone this repository
+- Make docker images
 ```sh
-git clone https://github.com/lykmapipo/Dockerfiles
+make build
 ```
 
-- Install base docker images
+- Run base (base) docker image
 ```sh
-make docker/pull/os
+make run/base
 ```
 
-- Run test
+- Run development docker image
 ```sh
-make lint
+make run/dev
 ```
 
 
 ## Contribute
 
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
-
-
-## References
-
-> TODO
 
 
 ## Licence

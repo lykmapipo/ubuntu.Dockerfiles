@@ -1,84 +1,73 @@
-# set environment variables
+# Set environment variables
 export UBUNTU_OS_NAME ?= ubuntu
 export UBUNTU_OS_VERSION ?= 22.04
+export UBUNTU_OS_BASE_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-base
 export UBUNTU_OS_DEV_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-dev
 export UBUNTU_OS_PROD_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-prod
 export DOCKER_BUILDKIT ?= 1
 export IMAGE_VENDOR ?= lykmapipo
 export IMAGE_VERSION ?= v0.1.0
 
-
 .DEFAULT_GOAL := help
 
-.PHONY: build/dev/ubuntu  ## Build ubuntu dev image for experimentation
-build/dev/ubuntu:
-	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} ./ubuntu/${UBUNTU_OS_VERSION}-dev
+.PHONY: build  ## Build ubuntu images for experimentation
+build: build/base build/dev
 
+.PHONY: build/dev  ## Build ubuntu dev image for experimentation
+build/dev:
+	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} ./${UBUNTU_OS_VERSION}-dev
 
-.PHONY: run/dev/ubuntu  ## Run ubuntu dev image for experimentation
-run/dev/ubuntu:
+.PHONY: run/dev  ## Run ubuntu dev image for experimentation
+run/dev:
 	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
 
+.PHONY: build/base  ## Build ubuntu base (bare) image for experimentation
+build/base:
+	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} ./${UBUNTU_OS_VERSION}-base
+
+.PHONY: run/base  ## Run ubuntu base (bare) image for experimentation
+run/base:
+	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
 .PHONY: lint  ## Lint dockerfiles
-lint: lint/dev/ubuntu
+lint: lint/base lint/dev
 
+.PHONY: lint/dev  ## Lint dev dockerfiles
+lint/dev:
+	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-dev/Dockerfile
 
-.PHONY: lint/dev/ubuntu  ## Lint ubuntu dev dockerfile
-lint/dev/ubuntu:
-	docker run --rm -i hadolint/hadolint < ./ubuntu/${UBUNTU_OS_VERSION}-dev/Dockerfile
+.PHONY: lint/base  ## Lint base dockerfiles
+lint/base:
+	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-base/Dockerfile
 
+.PHONY: pull  ## Pull docker images i.e ubuntu, linter etc
+pull: pull/ubuntu pull/linter clean/dangling
 
-.PHONY: docker/pull/os  ## Pull base docker images i.e os, linter etc
-docker/pull/os:
-	@make docker/pull/ubuntu
-	@make docker/pull/debian
-	@make docker/pull/alpine
-	@make docker/pull/java
-	@make docker/pull/linter
-	@make clean/dangling
-
-
-.PHONY: docker/pull/ubuntu  ## Pull ubuntu docker images
-docker/pull/ubuntu:
+.PHONY: pull/ubuntu  ## Pull ubuntu docker images
+pull/ubuntu:
+	docker pull ubuntu:24.04
 	docker pull ubuntu:22.04
+	docker pull ubuntu:20.04
 
-
-.PHONY: docker/pull/debian  ## Pull debian slim docker images
-docker/pull/debian:
-	docker pull debian:12-slim
-
-
-.PHONY: docker/pull/alpine  ## Pull alpine docker images
-docker/pull/alpine:
-	docker pull alpine:3.19
-
-
-.PHONY: docker/pull/java  ## Pull java jdk and jre docker images
-docker/pull/java:
-	docker pull eclipse-temurin:17-jdk-jammy
-	docker pull eclipse-temurin:17-jre-jammy
-
-
-.PHONY: docker/pull/linter  ## Pull linter docker images i.e hadolint etc
-docker/pull/linter:
+.PHONY: pull/linter  ## Pull linter docker images i.e hadolint etc
+pull/linter:
 	docker pull hadolint/hadolint:latest
-	# docker pull gcr.io/gcp-runtimes/container-structure-test:latest
-
+	docker pull gcr.io/gcp-runtimes/container-structure-test:latest
 
 .PHONY: clean  ## Clean docker images
-clean: clean/dev/ubuntu clean/dangling
+clean: clean/base clean/dev clean/dangling
 
-
-.PHONY: clean/dev/ubuntu  ## Clean ubuntu dev images
-clean/dev/ubuntu:
+.PHONY: clean/dev  ## Clean dev images
+clean/dev:
 	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -a -q | xargs -L1 -r -t docker rmi
 
+.PHONY: clean/base  ## Clean base images
+clean/base:
+	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} -a -q | xargs -L1 -r -t docker rmi
 
 .PHONY: clean/dangling  ## Clean dangling images
 clean/dangling:
-	docker image ls --filter "dangling=true" --quiet | xargs -L1 -r -t docker rmi
-
+	docker image ls --filter "dangling=true" -a -q | xargs -L1 -r -t docker rmi
 
 .PHONY: help  ## Display this message
 help:
