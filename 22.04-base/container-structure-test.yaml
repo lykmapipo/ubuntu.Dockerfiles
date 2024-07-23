@@ -1,0 +1,75 @@
+# Validate the structure of a container image
+# See https://github.com/GoogleContainerTools/container-structure-test
+schemaVersion: 2.0.0
+
+# Metadata test ensures the container is configured correctly
+metadataTest:
+
+  # List of image labels key/value pairs that should be set on the container
+  labels:
+
+    - key: maintainer
+      value: Lally Elias <lallyelias87@gmail.com>
+
+    - key: vendor
+      value: lykmapipo
+
+  # List of environment variable key/value pairs that should be set in the container
+  envVars:
+
+    - key: LANG
+      value: C.UTF-8
+
+    - key: LC_ALL
+      value: C.UTF-8
+
+    - key: USER_UID
+      value: 1000
+
+    - key: USER_GID
+      value: 1000
+
+    - key: DEBIAN_FRONTEND
+      value: noninteractive
+
+    - key: USER_NAME
+      value: ubuntu
+
+    - key: USER_GROUP
+      value: ubuntu
+
+    - key: DEBIAN_FRONTEND
+      value: noninteractive
+
+  # Ports exposed in the container
+  exposedPorts: [22]
+
+  # CMD specified in the container
+  cmd: [bash]
+
+
+# Ensure that certain commands run properly in the target image
+commandTests:
+
+  - name: sudo installed
+    command: which
+    args: [sudo]
+    expectedOutput: [/usr/bin/sudo]
+
+
+# Check to make sure a specific file (or directory) exist within the file system of the image
+fileExistenceTests:
+
+  - name: etc/sudoers
+    path: etc/sudoers
+    shouldExist: true
+    permissions: -r--r-----
+    uid: 0
+    gid: 0
+
+  - name: etc/sudoers.d
+    path: etc/sudoers.d
+    shouldExist: true
+    permissions: drwxr-xr-x
+    uid: 0
+    gid: 0
