@@ -125,6 +125,7 @@ make run/base
 | procps | 2:3.3.17-6ubuntu2.1 | 1.36       |
 | sed | 4.8-1ubuntu2 | 0.32       |
 | sensible-utils | 0.0.17 | 0.06       |
+| sudo | 1.9.9-1ubuntu2.4 | 2.45       |
 | sysvinit-utils | 3.01-1ubuntu1 | 0.08       |
 | tar | 1.34+dfsg-1ubuntu0.1.22.04.2 | 0.94       |
 | ubuntu-keyring | 2021.03.26 | 0.04       |
