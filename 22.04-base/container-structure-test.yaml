@@ -18,10 +18,10 @@ metadataTest:
   envVars:
 
     - key: LANG
-      value: C.UTF-8
+      value: en_US.UTF-8
 
     - key: LC_ALL
-      value: C.UTF-8
+      value: en_US.UTF-8
 
     - key: USER_UID
       value: 1000
@@ -41,6 +41,12 @@ metadataTest:
     - key: DEBIAN_FRONTEND
       value: noninteractive
 
+    - key: LANGUAGE
+      value: en_US:en
+
+    - key: TZ
+      value: UTC
+
   # Ports exposed in the container
   exposedPorts: [22]
 
@@ -55,6 +61,16 @@ commandTests:
     command: which
     args: [sudo]
     expectedOutput: [/usr/bin/sudo]
+
+  - name: gnupg installed
+    command: which
+    args: [gpg]
+    expectedOutput: [/usr/bin/gpg]
+
+  - name: openssl installed
+    command: which
+    args: [openssl]
+    expectedOutput: [/usr/bin/openssl]
 
 
 # Check to make sure a specific file (or directory) exist within the file system of the image
@@ -71,5 +87,26 @@ fileExistenceTests:
     path: etc/sudoers.d
     shouldExist: true
     permissions: drwxr-xr-x
+    uid: 0
+    gid: 0
+
+  - name: etc/ssl/certs
+    path: etc/ssl/certs
+    shouldExist: true
+    permissions: drwxr-xr-x
+    uid: 0
+    gid: 0
+
+  - name: etc/locale.gen
+    path: etc/locale.gen
+    shouldExist: true
+    permissions: -rw-r--r--
+    uid: 0
+    gid: 0
+
+  - name: usr/share/locale/locale.alias
+    path: usr/share/locale/locale.alias
+    shouldExist: true
+    # permissions: -rw-r--r-- ???
     uid: 0
     gid: 0
