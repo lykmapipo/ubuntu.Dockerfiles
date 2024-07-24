@@ -72,6 +72,18 @@ commandTests:
     args: [openssl]
     expectedOutput: [/usr/bin/openssl]
 
+  - name: ubuntu user exists
+    command: bash
+    args:
+      - -c
+      - |
+          if id "ubuntu" &>/dev/null; then
+            echo "'ubuntu' user exists."
+          else
+            echo "'ubuntu' user does not exist."
+            exit 1
+          fi
+
 
 # Check to make sure a specific file (or directory) exist within the file system of the image
 fileExistenceTests:
@@ -108,5 +120,19 @@ fileExistenceTests:
     path: usr/share/locale/locale.alias
     shouldExist: true
     # permissions: -rw-r--r-- ???
+    uid: 0
+    gid: 0
+
+  - name: home/ubuntu
+    path: home/ubuntu
+    shouldExist: true
+    permissions: drwxr-x---
+    uid: 1000
+    gid: 1000
+
+  - name: etc/sudoers.d/ubuntu
+    path: etc/sudoers.d/ubuntu
+    shouldExist: true
+    permissions: -r--r-----
     uid: 0
     gid: 0

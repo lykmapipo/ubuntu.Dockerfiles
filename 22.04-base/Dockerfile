@@ -59,6 +59,14 @@ ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
     TZ=UTC
 
+# Add a non-root user
+# - Create a new group and user with the specified UID and GID
+# - Add the user to the sudo group and configure passwordless sudo for this user
+RUN groupadd -g ${USER_GID} ${USER_GROUP} \
+    && useradd -g ${USER_GID} -G sudo -m -N -u ${USER_UID} -s /bin/bash ${USER_NAME} \
+    && echo '${USER_NAME} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/${USER_NAME} \
+    && chmod 0440 /etc/sudoers.d/${USER_NAME}
+
 # Expose common ports
 # - 22: SSH port
 EXPOSE 22
