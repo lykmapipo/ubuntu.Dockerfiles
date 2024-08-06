@@ -41,7 +41,14 @@ lint/base:
 	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-base/Dockerfile
 
 .PHONY: test  ## Test images
-test: test/base
+test: test/base test/dev
+
+.PHONY: test/dev  ## Test dev images
+test/dev:
+	docker run --rm -i \
+	-v /var/run/docker.sock:/var/run/docker.sock:ro \
+	-v ./${UBUNTU_OS_VERSION}-dev/container-structure-test.yaml:/${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml \
+	ghcr.io/googlecontainertools/container-structure-test test -i ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -c ./${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml
 
 .PHONY: test/base  ## Test base images
 test/base:

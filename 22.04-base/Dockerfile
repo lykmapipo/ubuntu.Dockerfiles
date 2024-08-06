@@ -50,7 +50,9 @@ RUN set -eux; \
     apt-get -y autoclean; \
     rm -rf /var/lib/apt/lists/*
 
-# Generate locale en_US.UTF-8 and update locale settings
+# Configure locale settings
+# - Generate locale en_US.UTF-8 and set as default
+# - Set system timezone to UTC
 # This ensures that applications using locale-specific features will use UTF-8 encoding
 RUN locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8
@@ -60,8 +62,9 @@ ENV LANG=en_US.UTF-8 \
     TZ=UTC
 
 # Add a non-root user
-# - Create a new group and user with the specified UID and GID
-# - Add the user to the sudo group and configure passwordless sudo for this user
+# - Create a group and user with the specified UID and GID
+# - Add user to the sudo group for administrative privileges
+# - Configure passwordless sudo for the user
 RUN groupadd -g ${USER_GID} ${USER_GROUP} \
     && useradd -g ${USER_GID} -G sudo -m -N -u ${USER_UID} -s /bin/bash ${USER_NAME} \
     && echo '${USER_NAME} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/${USER_NAME} \
