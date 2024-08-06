@@ -47,9 +47,6 @@ metadataTest:
     - key: TZ
       value: UTC
 
-  # Ports exposed in the container
-  exposedPorts: [22]
-
   # CMD specified in the container
   cmd: [bash]
 

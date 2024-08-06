@@ -67,10 +67,6 @@ RUN groupadd -g ${USER_GID} ${USER_GROUP} \
     && echo '${USER_NAME} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/${USER_NAME} \
     && chmod 0440 /etc/sudoers.d/${USER_NAME}
 
-# Expose common ports
-# - 22: SSH port
-EXPOSE 22
-
 # Set the default command to start a bash shell
 # This allows interactive use of the container or running commands
 CMD ["bash"]
