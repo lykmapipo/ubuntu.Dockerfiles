@@ -19,7 +19,9 @@ build/dev:
 
 .PHONY: run/dev  ## Run ubuntu dev image for experimentation
 run/dev:
-	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
+	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
 
 .PHONY: build/base  ## Build ubuntu base (bare) image for experimentation
 build/base:
@@ -27,7 +29,9 @@ build/base:
 
 .PHONY: run/base  ## Run ubuntu base (bare) image for experimentation
 run/base:
-	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
+	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
 .PHONY: lint  ## Lint scripts and dockerfiles
 lint: lint/scripts lint/base lint/dev
