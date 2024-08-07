@@ -30,7 +30,7 @@ run/base:
 	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
 .PHONY: lint  ## Lint dockerfiles
-lint: lint/base lint/dev
+lint: lint/scripts lint/base lint/dev
 
 .PHONY: lint/dev  ## Lint dev dockerfiles
 lint/dev:
@@ -39,6 +39,12 @@ lint/dev:
 .PHONY: lint/base  ## Lint base dockerfiles
 lint/base:
 	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-base/Dockerfile
+
+.PHONY: lint/scripts  ## Lint bash scripts
+lint/scripts:
+	docker run --rm -i \
+	-v ./scripts:/mnt/scripts \
+	koalaman/shellcheck ./scripts/*.sh
 
 .PHONY: test  ## Test images
 test: test/base test/dev
@@ -70,6 +76,7 @@ pull/ubuntu:
 pull/linter:
 	docker pull hadolint/hadolint:latest
 	docker pull ghcr.io/googlecontainertools/container-structure-test:latest
+	docker pull koalaman/shellcheck:latest
 
 .PHONY: clean  ## Clean docker images
 clean: clean/base clean/dev clean/dangling
