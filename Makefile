@@ -15,7 +15,8 @@ build: build/base build/dev
 
 .PHONY: build/dev  ## Build ubuntu dev image for experimentation
 build/dev:
-	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} ./${UBUNTU_OS_VERSION}-dev
+	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} \
+	./${UBUNTU_OS_VERSION}-dev
 
 .PHONY: run/dev  ## Run ubuntu dev image for experimentation
 run/dev:
@@ -25,7 +26,8 @@ run/dev:
 
 .PHONY: build/base  ## Build ubuntu base (bare) image for experimentation
 build/base:
-	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} ./${UBUNTU_OS_VERSION}-base
+	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} \
+	./${UBUNTU_OS_VERSION}-base
 
 .PHONY: run/base  ## Run ubuntu base (bare) image for experimentation
 run/base:
@@ -46,8 +48,10 @@ lint/base:
 
 .PHONY: lint/scripts  ## Lint and format bash scripts
 lint/scripts:
-	docker run --rm -i -v ./scripts:/mnt/scripts koalaman/shellcheck ./scripts/*.sh
-	docker run --rm -u $(id -u):$(id -g) -v ./scripts:/mnt/scripts mvdan/shfmt:latest -w /mnt/scripts
+	docker run --rm -i -v ./scripts:/mnt/scripts koalaman/shellcheck \
+	./scripts/*.sh
+	docker run --rm -u $(id -u):$(id -g) -v ./scripts:/mnt/scripts \
+	mvdan/shfmt:latest -w /mnt/scripts
 
 .PHONY: test  ## Test images
 test: test/base test/dev
@@ -57,14 +61,18 @@ test/dev:
 	docker run --rm -i \
 	-v /var/run/docker.sock:/var/run/docker.sock:ro \
 	-v ./${UBUNTU_OS_VERSION}-dev/container-structure-test.yaml:/${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml \
-	ghcr.io/googlecontainertools/container-structure-test test -i ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -c ./${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml
+	ghcr.io/googlecontainertools/container-structure-test test -i \
+	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -c \
+	./${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml
 
 .PHONY: test/base  ## Test base images
 test/base:
 	docker run --rm -i \
 	-v /var/run/docker.sock:/var/run/docker.sock:ro \
 	-v ./${UBUNTU_OS_VERSION}-base/container-structure-test.yaml:/${UBUNTU_OS_VERSION}-base-container-structure-test.yaml \
-	ghcr.io/googlecontainertools/container-structure-test test -i ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} -c ./${UBUNTU_OS_VERSION}-base-container-structure-test.yaml
+	ghcr.io/googlecontainertools/container-structure-test test -i \
+	${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} -c \
+	./${UBUNTU_OS_VERSION}-base-container-structure-test.yaml
 
 .PHONY: pull  ## Pull docker images i.e ubuntu, linter etc
 pull: pull/ubuntu pull/linter clean/dangling
@@ -87,11 +95,13 @@ clean: clean/base clean/dev clean/dangling
 
 .PHONY: clean/dev  ## Clean dev images
 clean/dev:
-	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -a -q | xargs -L1 -r -t docker rmi
+	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} \
+	-a -q | xargs -L1 -r -t docker rmi
 
 .PHONY: clean/base  ## Clean base images
 clean/base:
-	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} -a -q | xargs -L1 -r -t docker rmi
+	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} \
+	-a -q | xargs -L1 -r -t docker rmi
 
 .PHONY: clean/dangling  ## Clean dangling images
 clean/dangling:
