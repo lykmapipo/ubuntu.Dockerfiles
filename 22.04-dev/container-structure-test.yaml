@@ -81,6 +81,41 @@ commandTests:
             exit 1
           fi
 
+  - name: curl installed
+    command: which
+    args: [curl]
+    expectedOutput: [/usr/bin/curl]
+
+  - name: gcc installed
+    command: which
+    args: [gcc]
+    expectedOutput: [/usr/bin/gcc]
+
+  - name: git installed
+    command: which
+    args: [git]
+    expectedOutput: [/usr/bin/git]
+
+  - name: make installed
+    command: which
+    args: [make]
+    expectedOutput: [/usr/bin/make]
+
+  - name: openssh-client installed
+    command: which
+    args: [ssh]
+    expectedOutput: [/usr/bin/ssh]
+
+  - name: vim installed
+    command: which
+    args: [vim]
+    expectedOutput: [/usr/bin/vim]
+
+  - name: wget installed
+    command: which
+    args: [wget]
+    expectedOutput: [/usr/bin/wget]
+
 
 # Check to make sure a specific file (or directory) exist within the file system of the image
 fileExistenceTests:
