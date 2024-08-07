@@ -40,11 +40,10 @@ lint/dev:
 lint/base:
 	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-base/Dockerfile
 
-.PHONY: lint/scripts  ## Lint bash scripts
+.PHONY: lint/scripts  ## Lint and format bash scripts
 lint/scripts:
-	docker run --rm -i \
-	-v ./scripts:/mnt/scripts \
-	koalaman/shellcheck ./scripts/*.sh
+	docker run --rm -i -v ./scripts:/mnt/scripts koalaman/shellcheck ./scripts/*.sh
+	docker run --rm -u $(id -u):$(id -g) -v ./scripts:/mnt/scripts mvdan/shfmt:latest -w /mnt/scripts
 
 .PHONY: test  ## Test images
 test: test/base test/dev
@@ -77,6 +76,7 @@ pull/linter:
 	docker pull hadolint/hadolint:latest
 	docker pull ghcr.io/googlecontainertools/container-structure-test:latest
 	docker pull koalaman/shellcheck:latest
+	docker pull mvdan/shfmt:latest
 
 .PHONY: clean  ## Clean docker images
 clean: clean/base clean/dev clean/dangling

@@ -9,8 +9,8 @@
 #   chmod +x list_installed_packages.sh
 #   ./list_installed_packages.sh
 
-dpkg-query -Wf '${Package}\t${Version}\t${Installed-Size}\t${Homepage}\n' | \
-awk '
+dpkg-query -Wf '${Package}\t${Version}\t${Installed-Size}\t${Homepage}\n' |
+	awk '
 BEGIN {
     # Print the header of the markdown table
     print "| Package | Version | Installed Size (MBs) | Homepage |";
