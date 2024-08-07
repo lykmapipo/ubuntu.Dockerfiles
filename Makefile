@@ -29,7 +29,7 @@ build/base:
 run/base:
 	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
-.PHONY: lint  ## Lint dockerfiles
+.PHONY: lint  ## Lint scripts and dockerfiles
 lint: lint/scripts lint/base lint/dev
 
 .PHONY: lint/dev  ## Lint dev dockerfiles

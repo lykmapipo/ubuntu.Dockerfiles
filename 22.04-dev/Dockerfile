@@ -81,8 +81,8 @@ ENV LANG=en_US.UTF-8 \
 # - Add user to the sudo group for administrative privileges
 # - Configure passwordless sudo for the user
 RUN groupadd -g ${USER_GID} ${USER_GROUP} \
-    && useradd -g ${USER_GID} -G sudo -m -N -u ${USER_UID} -s /bin/bash ${USER_NAME} \
-    && echo '${USER_NAME} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/${USER_NAME} \
+    && useradd -l -g ${USER_GID} -G sudo -m -N -u ${USER_UID} -s /bin/bash ${USER_NAME} \
+    && echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USER_NAME} \
     && chmod 0440 /etc/sudoers.d/${USER_NAME}
 
 # Set the default command to start a bash shell
