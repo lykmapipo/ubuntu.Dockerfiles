@@ -29,14 +29,20 @@ make pull
 make build
 ```
 
-- Run base (base) docker image
+- Run base (bare) docker image
 ```sh
 make run/base
+```
+```sh
+make run/base-non-root
 ```
 
 - Run development docker image
 ```sh
 make run/dev
+```
+```sh
+make run/dev-non-root
 ```
 
 

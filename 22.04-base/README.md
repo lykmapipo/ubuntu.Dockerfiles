@@ -20,9 +20,14 @@ make pull
 make build/base
 ```
 
-- Run docker image
+- Run docker image (root user)
 ```sh
 make run/base
+```
+
+- Run docker image (non-root user)
+```sh
+make run/base-non-root
 ```
 
 

@@ -24,6 +24,13 @@ run/dev:
 	-v ./scripts:/usr/local/bin/scripts \
 	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
 
+.PHONY: run/dev-non-root  ## Run ubuntu dev image for experimentation (non-root)
+run/dev-non-root:
+	docker run --name ${UBUNTU_OS_DEV_TAG} -it --rm \
+	--user ubuntu --workdir /home/ubuntu \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
+
 .PHONY: build/base  ## Build ubuntu base (bare) image for experimentation
 build/base:
 	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION} \
@@ -32,6 +39,13 @@ build/base:
 .PHONY: run/base  ## Run ubuntu base (bare) image for experimentation
 run/base:
 	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
+
+.PHONY: run/base-non-root  ## Run ubuntu base (bare) image for experimentation (non-root)
+run/base-non-root:
+	docker run --name ${UBUNTU_OS_BASE_TAG} -it --rm \
+	--user ubuntu --workdir /home/ubuntu \
 	-v ./scripts:/usr/local/bin/scripts \
 	${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
