@@ -22,7 +22,7 @@ ENV LANG=C.UTF-8 \
   USER_GROUP=ubuntu \
   DEBIAN_FRONTEND=noninteractive
 
-# Update package lists, install essential packages, and clean up to reduce image size
+# Update package lists, install essential packages, upgrade packages, and clean up to reduce image size
 # - apt-transport-https: Allows APT to use HTTPS for fetching packages
 # - build-essential: Includes essential build tools like GCC, make, etc.
 # - ca-certificates: Provides CA certificates for secure HTTPS connections
@@ -61,6 +61,7 @@ RUN set -eux; \
         vim \
         wget \
     ; \
+    apt-get -y upgrade --no-install-recommends; \
     apt-get -y autoremove; \
     apt-get -y autoclean; \
     rm -rf /var/lib/apt/lists/*
