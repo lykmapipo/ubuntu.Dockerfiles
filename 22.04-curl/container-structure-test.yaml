@@ -1,0 +1,145 @@
+# Validate the structure of a container image
+# See https://github.com/GoogleContainerTools/container-structure-test
+schemaVersion: 2.0.0
+
+# Metadata test ensures the container is configured correctly
+metadataTest:
+
+  # List of image labels key/value pairs that should be set on the container
+  labels:
+
+    - key: maintainer
+      value: Lally Elias <lallyelias87@gmail.com>
+
+    - key: vendor
+      value: lykmapipo
+
+  # List of environment variable key/value pairs that should be set in the container
+  envVars:
+
+    - key: LANG
+      value: en_US.UTF-8
+
+    - key: LC_ALL
+      value: en_US.UTF-8
+
+    - key: USER_UID
+      value: 1000
+
+    - key: USER_GID
+      value: 1000
+
+    - key: DEBIAN_FRONTEND
+      value: noninteractive
+
+    - key: USER_NAME
+      value: ubuntu
+
+    - key: USER_GROUP
+      value: ubuntu
+
+    - key: DEBIAN_FRONTEND
+      value: noninteractive
+
+    - key: LANGUAGE
+      value: en_US:en
+
+    - key: TZ
+      value: UTC
+
+  # CMD specified in the container
+  cmd: [bash]
+
+
+# Ensure that certain commands run properly in the target image
+commandTests:
+
+  - name: sudo installed
+    command: which
+    args: [sudo]
+    expectedOutput: [/usr/bin/sudo]
+
+  - name: gnupg installed
+    command: which
+    args: [gpg]
+    expectedOutput: [/usr/bin/gpg]
+
+  - name: openssl installed
+    command: which
+    args: [openssl]
+    expectedOutput: [/usr/bin/openssl]
+
+  - name: ubuntu user exists
+    command: bash
+    args:
+      - -c
+      - |
+          if id "ubuntu" &>/dev/null; then
+            echo "'ubuntu' user exists."
+          else
+            echo "'ubuntu' user does not exist."
+            exit 1
+          fi
+
+  - name: curl installed
+    command: which
+    args: [curl]
+    expectedOutput: [/usr/bin/curl]
+
+  - name: wget installed
+    command: which
+    args: [wget]
+    expectedOutput: [/usr/bin/wget]
+
+
+# Check to make sure a specific file (or directory) exist within the file system of the image
+fileExistenceTests:
+
+  - name: etc/sudoers
+    path: etc/sudoers
+    shouldExist: true
+    permissions: -r--r-----
+    uid: 0
+    gid: 0
+
+  - name: etc/sudoers.d
+    path: etc/sudoers.d
+    shouldExist: true
+    permissions: drwxr-xr-x
+    uid: 0
+    gid: 0
+
+  - name: etc/ssl/certs
+    path: etc/ssl/certs
+    shouldExist: true
+    permissions: drwxr-xr-x
+    uid: 0
+    gid: 0
+
+  - name: etc/locale.gen
+    path: etc/locale.gen
+    shouldExist: true
+    permissions: -rw-r--r--
+    uid: 0
+    gid: 0
+
+  - name: usr/share/locale/locale.alias
+    path: usr/share/locale/locale.alias
+    shouldExist: true
+    # permissions: -rw-r--r-- ???
+    uid: 0
+    gid: 0
+
+  - name: home/ubuntu
+    path: home/ubuntu
+    shouldExist: true
+    permissions: drwxr-x---
+    uid: 1000
+    gid: 1000
+
+  - name: etc/sudoers.d/ubuntu
+    path: etc/sudoers.d/ubuntu
+    shouldExist: true
+    permissions: -r--r-----
+    uid: 0
+    gid: 0

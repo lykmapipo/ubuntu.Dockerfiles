@@ -2,6 +2,7 @@
 export UBUNTU_OS_NAME ?= ubuntu
 export UBUNTU_OS_VERSION ?= 22.04
 export UBUNTU_OS_BASE_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-base
+export UBUNTU_OS_CURL_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-curl
 export UBUNTU_OS_DEV_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-dev
 export UBUNTU_OS_PROD_TAG ?= ${UBUNTU_OS_NAME}-${UBUNTU_OS_VERSION}-prod
 export DOCKER_BUILDKIT ?= 1
@@ -11,7 +12,7 @@ export IMAGE_VERSION ?= v0.1.0
 .DEFAULT_GOAL := help
 
 .PHONY: build  ## Build ubuntu images for experimentation
-build: build/base build/dev
+build: build/base build/curl build/dev
 
 .PHONY: build/dev  ## Build ubuntu dev image for experimentation
 build/dev:
@@ -30,6 +31,28 @@ run/dev-non-root:
 	--user ubuntu --workdir /home/ubuntu \
 	-v ./scripts:/usr/local/bin/scripts \
 	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION}
+
+.PHONY: build/curl  ## Build ubuntu curl image for experimentation
+build/curl:
+	docker build -t ${IMAGE_VENDOR}/${UBUNTU_OS_CURL_TAG}:${IMAGE_VERSION} \
+	./${UBUNTU_OS_VERSION}-curl
+
+.PHONY: run/curl  ## Run ubuntu curl image for experimentation
+run/curl:
+	mkdir -p ./tmp
+	docker run --name ${UBUNTU_OS_CURL_TAG} -it --rm \
+	-v ./tmp:/tmp \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_CURL_TAG}:${IMAGE_VERSION}
+
+.PHONY: run/curl-non-root  ## Run ubuntu curl image for experimentation (non-root)
+run/curl-non-root:
+	mkdir -p ./tmp
+	docker run --name ${UBUNTU_OS_CURL_TAG} -it --rm \
+	--user ubuntu --workdir /home/ubuntu \
+	-v ./tmp:/tmp \
+	-v ./scripts:/usr/local/bin/scripts \
+	${IMAGE_VENDOR}/${UBUNTU_OS_CURL_TAG}:${IMAGE_VERSION}
 
 .PHONY: build/base  ## Build ubuntu base (bare) image for experimentation
 build/base:
@@ -50,11 +73,15 @@ run/base-non-root:
 	${IMAGE_VENDOR}/${UBUNTU_OS_BASE_TAG}:${IMAGE_VERSION}
 
 .PHONY: lint  ## Lint scripts and dockerfiles
-lint: lint/scripts lint/base lint/dev
+lint: lint/scripts lint/base lint/curl lint/dev
 
 .PHONY: lint/dev  ## Lint dev dockerfiles
 lint/dev:
 	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-dev/Dockerfile
+
+.PHONY: lint/curl  ## Lint curl dockerfiles
+lint/curl:
+	docker run --rm -i hadolint/hadolint < ./${UBUNTU_OS_VERSION}-curl/Dockerfile
 
 .PHONY: lint/base  ## Lint base dockerfiles
 lint/base:
@@ -68,7 +95,7 @@ lint/scripts:
 	mvdan/shfmt:latest -w /mnt/scripts
 
 .PHONY: test  ## Test images
-test: test/base test/dev
+test: test/base test/curl test/dev
 
 .PHONY: test/dev  ## Test dev images
 test/dev:
@@ -78,6 +105,15 @@ test/dev:
 	ghcr.io/googlecontainertools/container-structure-test test -i \
 	${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} -c \
 	./${UBUNTU_OS_VERSION}-dev-container-structure-test.yaml
+
+.PHONY: test/curl  ## Test curl images
+test/curl:
+	docker run --rm -i \
+	-v /var/run/docker.sock:/var/run/docker.sock:ro \
+	-v ./${UBUNTU_OS_VERSION}-curl/container-structure-test.yaml:/${UBUNTU_OS_VERSION}-curl-container-structure-test.yaml \
+	ghcr.io/googlecontainertools/container-structure-test test -i \
+	${IMAGE_VENDOR}/${UBUNTU_OS_CURL_TAG}:${IMAGE_VERSION} -c \
+	./${UBUNTU_OS_VERSION}-curl-container-structure-test.yaml
 
 .PHONY: test/base  ## Test base images
 test/base:
@@ -105,11 +141,16 @@ pull/linter:
 	docker pull mvdan/shfmt:latest
 
 .PHONY: clean  ## Clean docker images
-clean: clean/base clean/dev clean/dangling
+clean: clean/base clean/curl clean/dev clean/dangling
 
 .PHONY: clean/dev  ## Clean dev images
 clean/dev:
 	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_DEV_TAG}:${IMAGE_VERSION} \
+	-a -q | xargs -L1 -r -t docker rmi
+
+.PHONY: clean/curl  ## Clean curl images
+clean/curl:
+	docker image ls ${IMAGE_VENDOR}/${UBUNTU_OS_CURL_TAG}:${IMAGE_VERSION} \
 	-a -q | xargs -L1 -r -t docker rmi
 
 .PHONY: clean/base  ## Clean base images
