@@ -1,3 +1,3 @@
 # Security
 
-If you find any security vulnerability, please, file a [new issue](https://github.com/lykmapipo/Dockerfile/issues).
+If you find any security vulnerability, please, file a [new issue](https://github.com/lykmapipo/ubuntu.Dockerfiles/issues).
