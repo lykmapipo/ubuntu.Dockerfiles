@@ -42,6 +42,7 @@ make run/curl-non-root
 | base-passwd | 3.5.52build1 | 0.24                  |  |
 | bash | 5.1-6ubuntu1.1 | 1.82                  | http://tiswww.case.edu/php/chet/bash/bashtop.html |
 | bsdutils | 1:2.37.2-4ubuntu3.4 | 0.33                  | https://www.kernel.org/pub/linux/utils/util-linux/ |
+| bzip2 | 1.0.8-5build1 | 0.11                  | https://sourceware.org/bzip2/ |
 | ca-certificates | 20240203~22.04.1 | 0.39                  |  |
 | coreutils | 8.32-4.1ubuntu1.2 | 6.95                  | http://gnu.org/software/coreutils |
 | curl | 7.81.0-1ubuntu1.18 | 0.43                  | https://curl.haxx.se |
@@ -158,6 +159,7 @@ make run/curl-non-root
 | perl-base | 5.34.0-3ubuntu1.3 | 7.55                  | http://dev.perl.org/perl5/ |
 | pinentry-curses | 1.1.1-1build2 | 0.09                  | https://www.gnupg.org/related_software/pinentry/ |
 | procps | 2:3.3.17-6ubuntu2.1 | 1.36                  | https://gitlab.com/procps-ng/procps |
+| rar | 2:5.5.0-1.1 | 1.15                  | https://www.rarlabs.com/ |
 | readline-common | 8.1.2-1 | 0.08                  |  |
 | sed | 4.8-1ubuntu2 | 0.32                  | https://www.gnu.org/software/sed/ |
 | sensible-utils | 0.0.17 | 0.06                  |  |
@@ -166,7 +168,10 @@ make run/curl-non-root
 | tar | 1.34+dfsg-1ubuntu0.1.22.04.2 | 0.94                  | https://www.gnu.org/software/tar/ |
 | tzdata | 2024a-0ubuntu0.22.04.1 | 3.81                  | https://www.iana.org/time-zones |
 | ubuntu-keyring | 2021.03.26 | 0.04                  |  |
+| unrar | 1:6.1.5-1 | 0.32                  | https://www.rarlab.com/ |
+| unzip | 6.0-26ubuntu3.2 | 0.37                  | http://www.info-zip.org/UnZip.html |
 | usrmerge | 25ubuntu2 | 0.20                  | https://wiki.debian.org/UsrMerge |
 | util-linux | 2.37.2-4ubuntu3.4 | 3.32                  | https://www.kernel.org/pub/linux/utils/util-linux/ |
 | wget | 1.21.2-2ubuntu1.1 | 0.91                  | https://www.gnu.org/software/wget/ |
+| zip | 3.0-12build2 | 0.52                  | http://www.info-zip.org/Zip.html |
 | zlib1g | 1:1.2.11.dfsg-2ubuntu9.2 | 0.16                  | http://zlib.net/ |

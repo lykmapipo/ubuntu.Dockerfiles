@@ -59,10 +59,30 @@ commandTests:
     args: [apt]
     expectedOutput: [/usr/bin/apt]
 
+  - name: bzip2 installed
+    command: which
+    args: [bzip2]
+    expectedOutput: [/usr/bin/bzip2]
+
+  - name: bunzip2 installed
+    command: which
+    args: [bunzip2]
+    expectedOutput: [/usr/bin/bunzip2]
+
   - name: curl installed
     command: which
     args: [curl]
     expectedOutput: [/usr/bin/curl]
+
+  - name: gzip installed
+    command: which
+    args: [gzip]
+    expectedOutput: [/usr/bin/gzip]
+
+  - name: gunzip installed
+    command: which
+    args: [gunzip]
+    expectedOutput: [/usr/bin/gunzip]
 
   - name: gnupg installed
     command: which
@@ -74,15 +94,45 @@ commandTests:
     args: [openssl]
     expectedOutput: [/usr/bin/openssl]
 
+  - name: rar installed
+    command: which
+    args: [rar]
+    expectedOutput: [/usr/bin/rar]
+
+  - name: unrar installed
+    command: which
+    args: [unrar]
+    expectedOutput: [/usr/bin/unrar]
+
   - name: sudo installed
     command: which
     args: [sudo]
     expectedOutput: [/usr/bin/sudo]
 
+  - name: tar installed
+    command: which
+    args: [tar]
+    expectedOutput: [/usr/bin/tar]
+
+  - name: unrar installed
+    command: which
+    args: [unrar]
+    expectedOutput: [/usr/bin/unrar]
+
   - name: wget installed
     command: which
     args: [wget]
     expectedOutput: [/usr/bin/wget]
+
+  - name: zip installed
+    command: which
+    args: [zip]
+    expectedOutput: [/usr/bin/zip]
+
+  - name: unzip installed
+    command: which
+    args: [unzip]
+    expectedOutput: [/usr/bin/unzip]
 
   - name: ubuntu user exists
     command: bash

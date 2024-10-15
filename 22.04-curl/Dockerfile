@@ -40,15 +40,22 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --fix-missing --no-install-recommends \
         apt-transport-https \
+        bzip2 \
         ca-certificates \
         curl \
         gnupg \
+        gzip \
         locales \
         openssl \
         procps \
+        rar \
         sudo \
+        tar \
         tzdata \
+        unrar \
+        unzip \
         wget \
+        zip \
     ; \
     apt-get -y upgrade --no-install-recommends; \
     apt-get -y autoremove; \
