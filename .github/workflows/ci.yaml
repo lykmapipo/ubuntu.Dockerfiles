@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Run on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: ["ubuntu-latest"]
+
+    steps:
+    - name: Checkout codes
+      id: checkout-codes
+      uses: actions/checkout@v4
+
+    - name: Pull docker images i.e ubuntu, linter etc
+      id: pull-docker-images
+      run: make pull
+
+    - name: Lint scripts and dockerfiles
+      id: lint-scripts-and-dockerfiles
+      run: make lint
+
+    - name: Build ubuntu images for experimentation
+      id: build-docker-images
+      run: make build
+
+    - name: Test images
+      id: test-docker-images
+      run: make test
+
+    - name: Clean docker images
+      id: clean-docker-images
+      run: make clean
