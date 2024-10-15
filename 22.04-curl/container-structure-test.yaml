@@ -54,10 +54,15 @@ metadataTest:
 # Ensure that certain commands run properly in the target image
 commandTests:
 
-  - name: sudo installed
+  - name: apt installed
     command: which
-    args: [sudo]
-    expectedOutput: [/usr/bin/sudo]
+    args: [apt]
+    expectedOutput: [/usr/bin/apt]
+
+  - name: curl installed
+    command: which
+    args: [curl]
+    expectedOutput: [/usr/bin/curl]
 
   - name: gnupg installed
     command: which
@@ -68,6 +73,16 @@ commandTests:
     command: which
     args: [openssl]
     expectedOutput: [/usr/bin/openssl]
+
+  - name: sudo installed
+    command: which
+    args: [sudo]
+    expectedOutput: [/usr/bin/sudo]
+
+  - name: wget installed
+    command: which
+    args: [wget]
+    expectedOutput: [/usr/bin/wget]
 
   - name: ubuntu user exists
     command: bash
@@ -80,16 +95,6 @@ commandTests:
             echo "'ubuntu' user does not exist."
             exit 1
           fi
-
-  - name: curl installed
-    command: which
-    args: [curl]
-    expectedOutput: [/usr/bin/curl]
-
-  - name: wget installed
-    command: which
-    args: [wget]
-    expectedOutput: [/usr/bin/wget]
 
 
 # Check to make sure a specific file (or directory) exist within the file system of the image
