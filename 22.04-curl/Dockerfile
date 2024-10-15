@@ -24,6 +24,7 @@ ENV LANG=C.UTF-8 \
 
 # Update package lists, install essential packages, upgrade packages, and clean up to reduce image size
 # - apt-transport-https: Allows APT to use HTTPS for fetching packages
+# - bzip2, gzip, tar, zip, unzip, rar, unrar: Common compression and archive utilities
 # - ca-certificates: Provides CA certificates for secure HTTPS connections
 # - curl: Command-line tool for transferring data with URLs
 # - gnupg: Provides tools for managing cryptographic keys and secure communication
