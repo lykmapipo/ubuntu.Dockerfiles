@@ -89,6 +89,16 @@ commandTests:
     args: [gpg]
     expectedOutput: [/usr/bin/gpg]
 
+  - name: jq installed
+    command: which
+    args: [jq]
+    expectedOutput: [/usr/bin/jq]
+
+  - name: less installed
+    command: which
+    args: [less]
+    expectedOutput: [/usr/bin/less]
+
   - name: openssl installed
     command: which
     args: [openssl]

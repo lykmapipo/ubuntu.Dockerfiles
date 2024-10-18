@@ -28,6 +28,7 @@ ENV LANG=C.UTF-8 \
 # - ca-certificates: Provides CA certificates for secure HTTPS connections
 # - curl: Command-line tool for transferring data with URLs
 # - gnupg: Provides tools for managing cryptographic keys and secure communication
+# - jq: Command-line tool for processing JSON
 # - locales: Provides locale data for localizing the system
 # - openssl: Provides tools for cryptographic operations and SSL/TLS support
 # - procps: Provides utilities for monitoring and managing system processes
@@ -46,6 +47,8 @@ RUN set -eux; \
         curl \
         gnupg \
         gzip \
+        jq \
+        less \
         locales \
         openssl \
         procps \

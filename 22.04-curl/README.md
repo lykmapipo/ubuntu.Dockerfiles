@@ -69,6 +69,8 @@ make run/curl-non-root
 | gzip | 1.10-4ubuntu4.1 | 0.23                  | https://www.gnu.org/software/gzip/ |
 | hostname | 3.23ubuntu2 | 0.05                  |  |
 | init-system-helpers | 1.62 | 0.13                  |  |
+| jq | 1.6-2.1ubuntu3 | 0.10                  | https://github.com/stedolan/jq |
+| less | 590-1ubuntu0.22.04.3 | 0.31                  | http://www.greenwoodsoftware.com/less/ |
 | libacl1 | 2.3.1-1 | 0.07                  | https://savannah.nongnu.org/projects/acl/ |
 | libapt-pkg6.0 | 2.4.13 | 3.12                  |  |
 | libassuan0 | 2.5.5-1build1 | 0.11                  | https://www.gnupg.org/related_software/libassuan/index.html |
@@ -97,6 +99,7 @@ make run/curl-non-root
 | libgssapi-krb5-2 | 1.19.2-2ubuntu0.4 | 0.44                  | http://web.mit.edu/kerberos/ |
 | libhogweed6 | 3.7.3-1build2 | 0.33                  | http://www.lysator.liu.se/~nisse/nettle/ |
 | libidn2-0 | 2.3.2-2build1 | 0.21                  | https://www.gnu.org/software/libidn/#libidn2 |
+| libjq1 | 1.6-2.1ubuntu3 | 0.34                  | https://github.com/stedolan/jq |
 | libk5crypto3 | 1.19.2-2ubuntu0.4 | 0.29                  | http://web.mit.edu/kerberos/ |
 | libkeyutils1 | 1.6.1-2ubuntu3 | 0.05                  | https://people.redhat.com/~dhowells/keyutils/ |
 | libkrb5-3 | 1.19.2-2ubuntu0.4 | 1.03                  | http://web.mit.edu/kerberos/ |
@@ -112,6 +115,7 @@ make run/curl-non-root
 | libnghttp2-14 | 1.43.0-1ubuntu0.2 | 0.20                  | https://nghttp2.org/ |
 | libnpth0 | 1.6-3build2 | 0.04                  | https://www.gnupg.org/ |
 | libnsl2 | 1.3.0-2build2 | 0.12                  | https://github.com/thkukuk/libnsl |
+| libonig5 | 6.9.7.1-2build1 | 0.60                  | https://github.com/kkos/oniguruma |
 | libp11-kit0 | 0.24.0-6build1 | 1.26                  | https://p11-glue.github.io/p11-glue/p11-kit.html |
 | libpam-modules | 1.4.0-11ubuntu2.4 | 1.11                  | http://www.linux-pam.org/ |
 | libpam-modules-bin | 1.4.0-11ubuntu2.4 | 0.24                  | http://www.linux-pam.org/ |
